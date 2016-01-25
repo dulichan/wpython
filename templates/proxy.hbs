@@ -1,0 +1,13 @@
+<proxy name="{{name}}" startOnLoad="{{startOnLoad}}" trace="{{traceFlag}}"
+  transports="{{transports}}" xmlns="http://ws.apache.org/ns/synapse">
+  <target faultSequence="{{faultSequence}}">
+  	<endpoint key="{{endpointName}}"/>
+    <inSequence>
+    	<sequence key="{{inSequenceKey}}"></sequence>
+    </inSequence>
+    <outSequence>
+      <send/>
+    </outSequence>
+    <faultSequence/>
+  </target>
+</proxy>

@@ -1,0 +1,42 @@
+<endpoint name="{{name}}" xmlns="http://ws.apache.org/ns/synapse">
+  <{{type}}  
+
+    {{#if http}}
+      uri-template="{{http_props.uri}}" method="{{http_props.method}}" 
+    {{/if}}
+    {{#if address}}
+      uri="{{address_props.uri}}" format="{{address_props.format}}" 
+      {{#if address_props.optimize}}
+        optimize="{{address_props.optimize}}" 
+      {{/if}}
+      {{#if address_props.encoding}}
+        encoding="{{address_props.encoding}}"
+      {{/if}}
+      statistics="{{address_props.statistics}}" trace="{{address_props.traceFlag}}"
+    {{/if}}
+    >
+    {{#if address}}
+      <suspendOnFailure>
+        <errorCodes>-1</errorCodes>
+        <initialDuration>60000</initialDuration>
+        <progressionFactor>1.0</progressionFactor>
+        <maximumDuration>60000</maximumDuration>
+      </suspendOnFailure>
+      <markForSuspension>
+        <errorCodes>-1</errorCodes>
+      </markForSuspension>
+      {{#if address_props.timeout}}
+        <timeout>
+          <duration>{{address_props.timeout}}</duration>
+          <responseAction>{{address_props.discard}}</responseAction>
+        </timeout>
+      {{/if}}
+      {{#if address_props.securityPolicy}}
+        <enableSec policy="{{address_props.securityPolicy}}"/>
+      {{/if}}
+      {{#if address_props.addressingVersion}}
+        <enableAddressing version="{{addressingVersion}}"] separateListener="address_props.addressingListener"/>
+      {{/if}}
+    {{/if}}
+  </{{type}}>
+</endpoint>

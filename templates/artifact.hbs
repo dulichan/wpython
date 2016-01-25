@@ -1,0 +1,7 @@
+<artifacts>
+    {{#each resources}}
+        <artifact name="{{resourceName}}" groupId="{{../parentGroupId}}.{{type}}" version="{{resourceVersion}}" type="synapse/{{type}}" serverRole="{{serverRole}}">
+        <file>src/main/synapse-config/{{type}}s/{{resourceName}}.xml</file>
+    	</artifact>
+    {{/each}}
+</artifacts>

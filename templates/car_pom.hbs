@@ -14,7 +14,7 @@
   <description>{{description}}</description>
   <properties>
     {{#each resources}}
-        <{{../parentGroupId}}.{{type}}_._{{resourceName}}>capp/{{serverRole}}</{{../parentGroupId}}.{{type}}_._{{resourceName}}>
+        <{{../parentGroupId}}.{{type}}_._{{resourceName}}>capp/{{../serverRole}}</{{../parentGroupId}}.{{type}}_._{{resourceName}}>
     {{/each}}
   </properties>
   <dependencies>
@@ -22,8 +22,8 @@
         <dependency>
           <groupId>{{../parentGroupId}}.{{type}}</groupId>
           <artifactId>{{resourceName}}</artifactId>
-          <version>{{resourceVersion}}</version>
-          <type>{{resourceFileType}}</type>
+          <version>{{../resourceVersion}}</version>
+          <type>{{../resourceFileType}}</type>
         </dependency>
     {{/each}}
   </dependencies>

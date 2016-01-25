@@ -74,38 +74,27 @@ class ArtifactGenerator(object):
 	    return file_paths  # Self-explanatory.
 
 	def generateArtifact(self, data, directory):
-		def generateCarPom(self, data, directory):
 		""" Pass in the generic parameters for the pom file. The method will read the synapse
 		directory and create the resources dictionary """
 		
 		synapse_directory = directory
 		
 		def synapse_config(filepath, filename, file_paths):
-			typeName = filepath.split("/")
-			# print typeName
-			#if typeName[13]=="synapse-config":
-			#	if len(typeName) == 16:
-			#		typeName = typeName[14]
-			#		typeName = typeName[:-1]
-			#		file_paths.append({'filePath': filepath, 'fileName': filename, 'type': typeName}) 
-			if typeName[8]=="generated":
-				if len(typeName) == 11:
-					typeName = typeName[9]
-					typeName = typeName[:-1]
-					file_paths.append({'filePath': filepath, 'fileName': filename, 'type': typeName}) 
+			typeName = os.path.splitext(filepath)[1]
+			fileESBType = filepath.split("/")[-2][:-1]
+			if typeName == ".xml":
+				file_paths.append({'filePath': filepath, 'fileName': filename, 'fileType': typeName[1:], 'fileESBType': fileESBType}) 
 			return file_paths
+
 		fileList = self.get_filepaths(synapse_directory, synapse_config)
-		# print fileList
 		resources = []
 		for fileObj in fileList:
-			resources.append({'type': fileObj['type'], 'resourceName': fileObj['fileName'].split(".")[0], 'serverRole': "EnterpriseServiceBus", 'resourceVersion': "1.0.0", 'resourceFileType': "xml"})
+			resources.append({'type': fileObj['fileESBType'], 'fileExtension': fileObj['fileType'], 'resourceName': fileObj['fileName'].split(".")[0]})
 		#print resources
 		data['resources'] = resources
-		print data
-		artifactCarObj = self.generate(data, "templates/car_pom.hbs")
 		artifactArtiObj = self.generate(data, "templates/artifact.hbs")
-		return [artifactCarObj, artifactArtiObj]
-		#registry_directory = directory + "/ewsg-registry/"
+		return artifactArtiObj
+		#registry_directory = directory + "/gateway-registry/"
 		#def registry_config(filepath, filename, file_paths):
 			#typeName = filepath.split("/")
 			#print typeName
@@ -124,26 +113,21 @@ class ArtifactGenerator(object):
 		synapse_directory = directory
 		
 		def synapse_config(filepath, filename, file_paths):
-			typeName = filepath.split("/")
-			# print typeName
-			#if typeName[13]=="synapse-config":
-			#	if len(typeName) == 16:
-			#		typeName = typeName[14]
-			#		typeName = typeName[:-1]
-			#		file_paths.append({'filePath': filepath, 'fileName': filename, 'type': typeName}) 
+			typeName = os.path.splitext(filepath)[1]
+			fileESBType = filepath.split("/")[-2][:-1]
+			if typeName == ".xml":
+				file_paths.append({'filePath': filepath, 'fileName': filename, 'fileType': typeName[1:], 'fileESBType': fileESBType}) 
 			return file_paths
+
 		fileList = self.get_filepaths(synapse_directory, synapse_config)
-		# print fileList
 		resources = []
 		for fileObj in fileList:
-			resources.append({'type': fileObj['type'], 'resourceName': fileObj['fileName'].split(".")[0], 'serverRole': "EnterpriseServiceBus", 'resourceVersion': "1.0.0", 'resourceFileType': "xml"})
-		#print resources
+			resources.append({'type': fileObj['fileESBType'], 'fileExtension': fileObj['fileType'], 'resourceName': fileObj['fileName'].split(".")[0]})
 		data['resources'] = resources
 		print data
 		artifactCarObj = self.generate(data, "templates/car_pom.hbs")
-		artifactArtiObj = self.generate(data, "templates/artifact.hbs")
-		return [artifactCarObj, artifactArtiObj]
-		#registry_directory = directory + "/ewsg-registry/"
+		return artifactCarObj
+		#registry_directory = directory + "/dev-registry/"
 		#def registry_config(filepath, filename, file_paths):
 			#typeName = filepath.split("/")
 			#print typeName
